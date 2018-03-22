@@ -107,6 +107,7 @@
 <li>打包文件命需含有当天的日期，使用rsync定时推送到备份服务器。</li>
 <li>检查备份服务器上是否正常备份，将结果发给管理员，每周六数据永久保留，其余保留180天。</li>
 </ol>
+<a id="more"></a>
 <h4 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h4><ol>
 <li><p>打包需要备份的文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@nfs01 /]<span class="comment">#  tar hzcf /backup/backup_$(date +%F).tar.gz var/spool/cron/root etc/rc.local etc/sysconfig/iptables var/www/html app/logs</span></span><br><span class="line">[root@nfs01 /]<span class="comment"># ll /backup/</span></span><br><span class="line">总用量 4</span><br><span class="line">-rw-r--r-- 1 root root 839 3月  22 20:13 backup_2018-03-22.tar.gz</span><br></pre></td></tr></table></figure>

@@ -283,25 +283,6 @@
 <li>打包文件命需含有当天的日期，使用rsync定时推送到备份服务器。</li>
 <li>检查备份服务器上是否正常备份，将结果发给管理员，每周六数据永久保留，其余保留180天。</li>
 </ol>
-<h4 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h4><ol>
-<li><p>打包需要备份的文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@nfs01 /]<span class="comment">#  tar hzcf /backup/backup_$(date +%F).tar.gz var/spool/cron/root etc/rc.local etc/sysconfig/iptables var/www/html app/logs</span></span><br><span class="line">[root@nfs01 /]<span class="comment"># ll /backup/</span></span><br><span class="line">总用量 4</span><br><span class="line">-rw-r--r-- 1 root root 839 3月  22 20:13 backup_2018-03-22.tar.gz</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find /backup/ -<span class="built_in">type</span> f -name <span class="string">"*.tar.gz"</span> -mtime +7|xargs rm -f</span><br><span class="line">推送： rsync -az /backup/ rsync_backup@172.16.1.41::backup --password-file=/etc/rsync.password</span><br></pre></td></tr></table></figure>
-<p>3.脚本<br>/server/scripts/backup.sh</p>
-</li>
-<li>结果检查，删除数据<br>/server/scripts/ch_del.sh</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
             
             <p class="more">
                 <a href="http://duangx.github.io/2018/01/16/备份/">阅读全文</a>
